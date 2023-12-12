@@ -1,0 +1,42 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+<!--    多注册中心-->
+<!--    <dubbo:registry id="local"  address="zookeeper://127.0.0.1:2181"/>-->
+<!--    <dubbo:registry id="remote" address="zookeeper://118.25.151.8:2181"/>-->
+
+<!--    配置中心 zookeeper-->
+<!--    <dubbo:config-center address="zookeeper://127.0.0.1:2181"/>-->
+    <!--    配置中心 dubbo-->
+    <dubbo:config-center address="apollo://localhost:8080"/>
+
+<!--    协议类型-->
+<!--    <dubbo:protocol name="dubbo" port="12345"/>-->
+<!--    <dubbo:protocol name="http" port="8888"/>-->
+
+<!--    javabean-->
+    <bean id="userService" class="com.gbhu.service.impl.UserServiceImpl"/>
+    <bean id="userService2" class="com.gbhu.service.impl.UserServiceImpl2"/>
+<!--    <bean id="fileService" class="com.gbhu.service.impl.FileServiceImpl"/>-->
+
+<!--    服务定义-->
+    <dubbo:service group="userService1" interface="com.gbhu.service.UserService" ref="userService" timeout="2000">
+        <dubbo:method name="sayHello" timeout="6000"></dubbo:method>
+    </dubbo:service>
+    <dubbo:service group="userService2" interface="com.gbhu.service.UserService" ref="userService2" timeout="6000" version="1.0"/>
+<!--    <dubbo:service interface="com.gbhu.service.FileService" ref="fileService" protocol="http"/>-->
+
+<!--   服务定义 多注册中心 -->
+<!--        <dubbo:service group="userService1" interface="com.gbhu.service.UserService" ref="userService" timeout="2000" registry="local">-->
+<!--        <dubbo:method name="sayHello" timeout="6000"></dubbo:method>-->
+<!--    </dubbo:service>-->
+<!--    <dubbo:service group="userService2" interface="com.gbhu.service.UserService" ref="userService2" timeout="6000" registry="local" version="1.0"/>-->
+
+<!--&lt;!&ndash;    <dubbo:service interface="com.gbhu.service.FileService" ref="fileService" protocol="http" registry="local,remote"/>&ndash;&gt;-->
+<!--    <dubbo:service interface="com.gbhu.service.FileService" ref="fileService" protocol="http" registry="local"/>-->
+<!--    -->
+
+</beans>
